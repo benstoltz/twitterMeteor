@@ -19,16 +19,18 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+      Twit = new TwitMaker({
+          consumer_key: "eqOV0Iu2M1114ILJW87nHMoxX",
+          consumer_secret: "8Gg7KoKpcRJlADXWRXb78PaaHcx6KAIU4Q4sxbeatC0Bpyf9gh",
+          access_token: "477055521-PpCBhLezySPX8CWmSCyUxRmQU7AMZyB5PqyvPNJF",
+          access_token_secret: "PdPH2nrikeBGiHlfg3vm2dWys6knZSQYYMvnF5xFKy14G"
+      });
 
-      var api = Meteor.npmRequire('sunlight-congress-api');
+      var stream = Twit.stream('statuses/sample');
 
-      var success = function (data) {
-          console.log(data);
-      };
-
-      api.init("9f64292279cc4c40aea72946979597a2");
-
-      var votes = api.votes().filter("year", "2014").call(success);
+      stream.on('tweet', function (tweet) {
+          console.log(tweet);
+      })
 
 
 
